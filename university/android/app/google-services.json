@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "876427025263",
+    "project_id": "uniapp-f826e",
+    "storage_bucket": "uniapp-f826e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876427025263:android:a66311de933a9fccb4a69a",
+        "android_client_info": {
+          "package_name": "com.example.university"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876427025263-kd3ii7n5eerk4jhsfr69ppqukqjn6guc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.university",
+            "certificate_hash": "2f46c83722795b2da739b7d5eec1ac252908eac8"
+          }
+        },
+        {
+          "client_id": "876427025263-jdcdlgkb502sokaocltsjb5bdpidm9bv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7gTLfsD1qx6UKcpUONZE7SUJ_fJFMIKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876427025263-jdcdlgkb502sokaocltsjb5bdpidm9bv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "876427025263-enfandd25vr0b1j9crici6n85dn60ick.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.university"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
