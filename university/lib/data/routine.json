@@ -1,0 +1,69 @@
+{
+  "program": "B.Sc. Engineering Program [Spring 2026]",
+  "department": "Computer Science and Engineering (CSE)",
+  "intake": "HSC Intake",
+  "year": "1st Year",
+  "semester": "2nd Semester",
+  "section": "C",
+  "weekly_schedule": {
+    "Monday": [
+      { "time": "09:30 - 10:20", "course_code": "Phy 1233", "teacher": "NKK" },
+      { "time": "10:20 - 11:10", "course_code": "Math 1231", "teacher": "ZR" },
+      { "time": "11:20 - 12:10", "course_code": "CSE 1223", "teacher": "SKK" },
+      { "time": "12:10 - 01:00", "course_code": "ME 1203", "teacher": "SAA" }
+    ],
+    "Tuesday": [
+      { "time": "09:30 - 10:20", "course_code": "CSE 1203", "teacher": "NAA" },
+      { "time": "10:20 - 11:10", "course_code": "CSE 1233", "teacher": "FYP" },
+      { "time": "11:20 - 12:10", "course_code": "Phy 1233", "teacher": "FYP" },
+      { "time": "12:10 - 01:00", "course_code": "Math 1201", "teacher": "MA" }
+    ],
+    "Wednesday": [
+      { "time": "09:30 - 10:20", "course_code": "Math 1231", "teacher": "ZR" },
+      { "time": "10:20 - 11:10", "course_code": "ME 1223", "teacher": "SKK" },
+      {
+        "time": "11:20 - 01:00",
+        "course_code": "ME-1224 (alt) / EEE-1222 (alt)",
+        "teacher": "TN / FM",
+        "room": "R-303 / R-604"
+      },
+      {
+        "time": "02:30 - 05:00",
+        "course_code": "CSE-1202 / CSE-1204",
+        "teacher": "SAA / MAH",
+        "room": "R-302 / R-605"
+      }
+    ],
+    "Thursday": [
+      { "time": "09:30 - 10:20", "course_code": "ME 1221", "teacher": "MR" },
+      { "time": "10:20 - 11:10", "course_code": "CSE 1201", "teacher": "MAH" },
+      { "time": "11:20 - 12:10", "course_code": "CSE 1223", "teacher": "SKK" },
+      { "time": "12:10 - 01:00", "course_code": "Math 1231", "teacher": "MA" },
+      { "time": "02:30 - 03:20", "course_code": "EEE 1221", "teacher": "MRK" }
+    ],
+    "Friday": [
+      { "time": "09:30 - 10:20", "course_code": "Phy 1233", "teacher": "FYP" },
+      { "time": "10:20 - 11:10", "course_code": "Math 1231", "teacher": "NKK" }
+    ],
+    "Saturday": [
+      { "time": "09:30 - 10:20", "course_code": "Phy 1233", "teacher": "FYT" },
+      { "time": "10:20 - 11:10", "course_code": "CSE 1201", "teacher": "MAH" },
+      { "time": "11:20 - 12:10", "course_code": "ME 1221", "teacher": "MAH" },
+      { "time": "12:10 - 01:00", "course_code": "EEE 1231", "teacher": "MRK" },
+      { "time": "02:30 - 03:20", "course_code": "CSE 1203", "teacher": "SAA" },
+      { "time": "03:20 - 05:00", "course_code": "EEE 1221", "teacher": "MRK" },
+      {
+        "time": "09:30 - 12:10",
+        "course_code": "CSE-1204/EEE 1222 (alt)",
+        "teacher": "SAA/FM",
+        "room": "R-304 / R-605/R-604"
+      },
+      {
+        "time": "12:10 - 02:30",
+        "course_code": "CSE-1202",
+        "teacher": "MAH",
+        "room": "R-304"
+      }
+    ]
+  }
+}

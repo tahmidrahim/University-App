@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Data Structures Assignment",
+    "subject": "CSE 1201",
+    "dueDate": "2026-05-15",
+    "status": "submitted"
+  },
+  {
+    "title": "Physics Lab Report",
+    "subject": "Phy 1233",
+    "dueDate": "2026-05-12",
+    "status": "submitted"
+  },
+  {
+    "title": "Physics Lab Report",
+    "subject": "Phy 1233",
+    "dueDate": "2026-05-12",
+    "status": "pending"
+  },
+  {
+    "title": "Math Problem Set",
+    "subject": "Math 1231",
+    "dueDate": "2026-05-10",
+    "status": "pending"
+  }
+]
