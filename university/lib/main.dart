@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: const LoginScreen(), // Make sure LoginScreen exists
+      // Make sure LoginScreen exists
       debugShowCheckedModeBanner: false,
     );
   }

@@ -27,12 +27,18 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _checkIfAlreadyLoggedIn() async {
-    if (_auth.currentUser != null && mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainNavScreen()),
-      );
+    if (!mounted) return;
+    if (_auth.currentUser != null) {
+      _navigateToHome();
     }
+  }
+
+  void _navigateToHome() {
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const MainNavScreen()),
+    );
   }
 
   void login() {
@@ -43,10 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (emailController.text == validEmail &&
         passwordController.text == validPassword) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainNavScreen()),
-      );
+      _navigateToHome();
     } else {
       setState(() {
         errorMessage = 'Invalid email or password';
@@ -56,10 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void guestLogin() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MainNavScreen()),
-    );
+    _navigateToHome();
   }
 
   Future<void> _signInWithGoogle() async {
@@ -70,15 +70,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final user = await _auth.signInWithGoogle();
 
+    if (!mounted) return;
+
     setState(() {
       isLoading = false;
     });
 
-    if (user != null && mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainNavScreen()),
-      );
+    if (user != null) {
+      _navigateToHome();
     } else {
       setState(() {
         errorMessage = 'Google Sign-In failed. Please try again.';
@@ -110,7 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo/Icon Area
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -143,7 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 40),
 
-                  // Login Form
                   Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
@@ -159,7 +156,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: Column(
                       children: [
-                        // Email Field
                         _buildTextField(
                           controller: emailController,
                           label: 'Student Email',
@@ -167,15 +163,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           type: TextInputType.emailAddress,
                         ),
                         const SizedBox(height: 20),
-                        
-                        // Password Field
                         _buildTextField(
                           controller: passwordController,
                           label: 'Password',
                           icon: Icons.lock_outline_rounded,
                           isPassword: true,
                         ),
-                        
                         if (errorMessage.isNotEmpty) ...[
                           const SizedBox(height: 12),
                           Text(
@@ -188,7 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                         const SizedBox(height: 20),
 
-                        // Login Button
                         if (isLoading)
                           const Center(child: CircularProgressIndicator())
                         else ...[
@@ -212,15 +204,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          
                           const SizedBox(height: 12),
-                          
-                          // Divider
                           Row(
                             children: [
-                              Expanded(child: Divider(color: Colors.grey.shade300)),
+                              Expanded(
+                                child: Divider(color: Colors.grey.shade300),
+                              ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                ),
                                 child: Text(
                                   'OR',
                                   style: TextStyle(
@@ -230,13 +223,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              Expanded(child: Divider(color: Colors.grey.shade300)),
+                              Expanded(
+                                child: Divider(color: Colors.grey.shade300),
+                              ),
                             ],
                           ),
-                          
                           const SizedBox(height: 12),
-                          
-                          // Google Sign-In Button
                           OutlinedButton.icon(
                             onPressed: _signInWithGoogle,
                             icon: Image.network(
@@ -263,10 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               side: BorderSide(color: Colors.grey.shade300),
                             ),
                           ),
-                          
                           const SizedBox(height: 15),
-
-                          // Guest Button
                           TextButton(
                             onPressed: guestLogin,
                             child: Text(
@@ -282,8 +271,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 30),
-
-                  // Helper Text
                   Text(
                     "Demo: student@gmail.com / 123456",
                     style: TextStyle(

@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../auth/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
+  User? get user => FirebaseAuth.instance.currentUser;
+
+  String getSafeUid() {
+    final uid = user?.uid;
+    if (uid == null || uid.isEmpty) return 'N/A';
+    return uid.length >= 8 ? uid.substring(0, 8) : uid;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            // --- MODERN HEADER ---
+            // HEADER
             Stack(
               alignment: Alignment.center,
               children: [
@@ -32,46 +41,51 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 Column(
                   children: [
                     const SizedBox(height: 50),
-                    // Profile Avatar with Glow
+
+                    // PROFILE IMAGE
                     Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.2),
                         shape: BoxShape.circle,
                       ),
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.person_rounded,
-                          size: 65,
-                          color: Colors.blue.shade700,
-                        ),
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Colors.white,
+                        backgroundImage: (user?.photoURL?.isNotEmpty ?? false)
+                            ? NetworkImage(user!.photoURL!)
+                            : null,
+                        child:
+                            (user?.photoURL == null || user!.photoURL!.isEmpty)
+                            ? Icon(
+                                Icons.person_rounded,
+                                size: 65,
+                                color: Colors.blue.shade700,
+                              )
+                            : null,
                       ),
                     ),
+
                     const SizedBox(height: 12),
-                    const Text(
-                      'Student Name',
-                      style: TextStyle(
+
+                    Text(
+                      user?.displayName ?? 'Guest Student',
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
-                        letterSpacing: 1.1,
                       ),
                     ),
-                    const Text(
-                      'Roll: CS23001',
-                      style: TextStyle(
+
+                    Text(
+                      user?.email ?? 'Not logged in',
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.white70,
-                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -81,14 +95,13 @@ class ProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // --- INFORMATION CARDS ---
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  _buildModernInfoCard(
+                  _buildCard(
                     title: 'Academic Profile',
-                    icon: Icons.auto_stories_rounded,
+                    icon: Icons.school,
                     items: [
                       {'label': 'Year', 'value': '1st Year'},
                       {'label': 'Semester', 'value': '2nd Semester'},
@@ -96,53 +109,34 @@ class ProfileScreen extends StatelessWidget {
                       {'label': 'Department', 'value': 'Computer Science'},
                     ],
                   ),
+
                   const SizedBox(height: 16),
-                  _buildModernInfoCard(
-                    title: 'Contact Details',
-                    icon: Icons.alternate_email_rounded,
+
+                  _buildCard(
+                    title: 'Account Details',
+                    icon: Icons.person,
                     items: [
-                      {'label': 'Email', 'value': 'student@gmail.com'},
-                      {'label': 'Phone', 'value': '+880 1XXX-XXXXXX'},
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _buildModernInfoCard(
-                    title: 'App Settings',
-                    icon: Icons.settings_suggest_rounded,
-                    items: [
-                      {'label': 'Version', 'value': '1.0.0 (Build 1)'},
-                      {'label': 'Storage used', 'value': '24.5 MB'},
+                      {'label': 'Login Method', 'value': 'Firebase Auth'},
+                      {'label': 'UID', 'value': getSafeUid()},
                     ],
                   ),
 
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 30),
 
-                  // --- LOGOUT BUTTON ---
+                  // LOGOUT
                   SizedBox(
                     width: double.infinity,
                     child: TextButton.icon(
                       onPressed: () => _logout(context),
-                      icon: const Icon(Icons.logout_rounded, size: 20),
-                      label: const Text(
-                        'LOGOUT ACCOUNT',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 1.1,
-                        ),
-                      ),
+                      icon: const Icon(Icons.logout),
+                      label: const Text('LOGOUT'),
                       style: TextButton.styleFrom(
-                        foregroundColor: Colors.red.shade400,
+                        foregroundColor: Colors.red,
                         backgroundColor: Colors.red.shade50,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 120,
-                  ), // Padding for the floating navbar
                 ],
               ),
             ),
@@ -152,7 +146,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildModernInfoCard({
+  Widget _buildCard({
     required String title,
     required IconData icon,
     required List<Map<String, String>> items,
@@ -160,13 +154,9 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
+          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
         ],
       ),
       child: Column(
@@ -175,42 +165,30 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                Icon(icon, size: 22, color: Colors.blue.shade700),
-                const SizedBox(width: 12),
+                Icon(icon, color: Colors.blue),
+                const SizedBox(width: 10),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFF1E293B),
-                  ),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
             ),
           ),
-          const Divider(height: 1, indent: 16, endIndent: 16),
+          const Divider(height: 1),
+
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               children: items.map((item) {
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        item['label']!,
-                        style: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      Text(item['label']!),
                       Text(
                         item['value']!,
-                        style: const TextStyle(
-                          color: Color(0xFF1E293B),
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -223,35 +201,31 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  void _logout(BuildContext context) {
-    HapticFeedback.heavyImpact();
+  void _logout(BuildContext context) async {
+    HapticFeedback.mediumImpact();
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Logout'),
-        content: const Text('Are you sure you want to end your session?'),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        content: const Text('Are you sure?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
-              );
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+
+              if (context.mounted) {
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              }
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red.shade400,
-              foregroundColor: Colors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
             child: const Text('Logout'),
           ),
         ],

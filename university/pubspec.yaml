@@ -23,7 +23,7 @@ dependencies:
   firebase_core: ^4.7.0
   firebase_auth: ^6.4.0
   google_sign_in: ^6.2.2
-  # shared_preferences: ^2.5.5
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +36,10 @@ flutter:
   assets:
     - lib/data/routine.json
     - lib/data/assignments.json
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "#1A2A44"
+  adaptive_icon_foreground: "assets/icon/icon.png"

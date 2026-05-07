@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:ui'; // Required for the blur effect
+import 'dart:ui';
+
 import 'home/home_screen.dart';
 import 'routine/routine_screen.dart';
 import 'profile/profile_screen.dart';
@@ -15,13 +16,6 @@ class MainNavScreen extends StatefulWidget {
 class _MainNavScreenState extends State<MainNavScreen> {
   int _selectedIndex = 0;
 
-  // Screens list
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const RoutineScreen(),
-    const ProfileScreen(),
-  ];
-
   void _onItemTapped(int index) {
     HapticFeedback.lightImpact();
     setState(() {
@@ -29,12 +23,29 @@ class _MainNavScreenState extends State<MainNavScreen> {
     });
   }
 
+  // SAFE: screens are created lazily (NO EARLY BUILD CRASH)
+  Widget _getScreen(int index) {
+    switch (index) {
+      case 0:
+        return const HomeScreen();
+      case 1:
+        return const RoutineScreen();
+      case 2:
+        return const ProfileScreen();
+      default:
+        return const HomeScreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      extendBody: true, // Allows content to scroll behind the floating bar
-      body: IndexedStack(index: _selectedIndex, children: _screens),
+      extendBody: true,
+
+      // SAFE: lazy screen loading
+      body: _getScreen(_selectedIndex),
+
       bottomNavigationBar: _buildFloatingNavBar(),
     );
   }
@@ -82,11 +93,11 @@ class _MainNavScreenState extends State<MainNavScreen> {
 
   Widget _buildNavItem(IconData icon, String label, int index) {
     bool isSelected = _selectedIndex == index;
+
     return GestureDetector(
       onTap: () => _onItemTapped(index),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 250),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: isSelected ? Colors.blue.shade700 : Colors.transparent,
